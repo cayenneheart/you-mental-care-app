@@ -9,6 +9,7 @@ import EmergencyBanner from "@/components/EmergencyBanner";
 import AppointmentBooker from "@/components/AppointmentBooker";
 import FeedbackSurvey from "@/components/FeedbackSurvey";
 import SOSFloatingButton from "@/components/SOSFloatingButton";
+import TopicSuggestions from "@/components/TopicSuggestions";
 import useSOSStore from "@/store/useSOSStore";
 import { useWebSocketConnection, sendMessage } from "@/services/api";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,7 @@ const ChatPage = () => {
   const { toast } = useToast();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [showSurvey, setShowSurvey] = useState(false);
+  const [showTopicSuggestions, setShowTopicSuggestions] = useState(false);
   
   // Store selectors
   const currentSession = useSOSStore(state => state.currentSession);
@@ -46,8 +48,13 @@ const ChatPage = () => {
   useEffect(() => {
     if (incomingMessage) {
       addMessage(incomingMessage, "ai");
+      
+      // AI最初のメッセージの後にトピック提案を表示する
+      if (currentSession && currentSession.messages.length <= 1) {
+        setShowTopicSuggestions(true);
+      }
     }
-  }, [incomingMessage, addMessage]);
+  }, [incomingMessage, addMessage, currentSession]);
   
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -82,6 +89,9 @@ const ChatPage = () => {
     // Add user message to the chat
     addMessage(text, "user");
     
+    // Hide topic suggestions after user sends a message
+    setShowTopicSuggestions(false);
+    
     try {
       // Send message to backend and get response
       const response = await sendMessage(id || "", text);
@@ -100,6 +110,11 @@ const ChatPage = () => {
     }
   };
   
+  // Handle topic selection
+  const handleSelectTopic = (topic: string) => {
+    handleSendMessage(topic);
+  };
+  
   // Handle AI self-help request (when wait time exceeds 1 minute)
   const handleAIHelpRequest = () => {
     stopWaitTimeCounter();
@@ -109,6 +124,9 @@ const ChatPage = () => {
       "🐼 こんにちは！パンダのユー（優）です。どのようなお手伝いができるでしょうか？",
       "ai"
     );
+    
+    // Show topic suggestions after AI greets the user
+    setShowTopicSuggestions(true);
   };
   
   // Handle end chat
@@ -163,6 +181,13 @@ const ChatPage = () => {
             {currentSession.messages.map((msg) => (
               <ChatMessage key={msg.id} message={msg} />
             ))}
+            
+            {/* Topic suggestions */}
+            {showTopicSuggestions && (
+              <div className="mx-4 my-3">
+                <TopicSuggestions onSelectTopic={handleSelectTopic} />
+              </div>
+            )}
             
             {/* Invisible element for scrolling to bottom */}
             <div ref={messagesEndRef} />

@@ -19,12 +19,12 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   return (
     <div
       className={cn(
-        "message fade-in",
-        isUser ? "message-user" : "message-ai",
+        "flex flex-col px-4 py-2 my-2 max-w-[80%] rounded-lg",
+        isUser ? "self-end bg-healing text-healing-foreground ml-auto" : "self-start bg-accent text-accent-foreground mr-auto",
       )}
     >
       <div className="flex flex-col">
-        <div className="text-sm">
+        <div className="text-sm break-words">
           {message.text}
         </div>
         <div className="flex items-center justify-end gap-2 mt-1">
