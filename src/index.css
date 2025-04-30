@@ -14,35 +14,38 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 250 47% 60%;
+    --primary: 196 80% 70%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 270 70% 90%;
+    --secondary-foreground: 270 50% 40%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 250 47% 90%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 270 80% 85%;
+    --accent-foreground: 270 50% 30%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 250 47% 60%;
+    --ring: 196 80% 70%;
 
     --radius: 0.75rem;
 
-    --sos: 250 60% 50%;
+    --sos: 270 70% 65%;
     --sos-foreground: 0 0% 100%;
 
     --emergency: 0 84.2% 60.2%; 
     --emergency-foreground: 0 0% 100%;
 
-    --healing: 120 60% 50%;
+    --healing: 196 80% 65%;
     --healing-foreground: 0 0% 100%;
+
+    --panda-black: 0 0% 20%;
+    --panda-white: 0 0% 98%;
   }
 
   .dark {
@@ -55,16 +58,16 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 250 47% 70%;
+    --primary: 196 80% 60%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 270 70% 70%;
+    --secondary-foreground: 270 50% 98%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 250 47% 25%;
+    --accent: 270 80% 50%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 50.6%;
@@ -72,15 +75,15 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 250 47% 70%;
+    --ring: 196 80% 60%;
 
-    --sos: 250 60% 65%;
+    --sos: 270 70% 70%;
     --sos-foreground: 0 0% 100%;
 
     --emergency: 0 84.2% 60.2%;
     --emergency-foreground: 0 0% 100%;
 
-    --healing: 120 60% 50%;
+    --healing: 196 80% 65%;
     --healing-foreground: 0 0% 100%;
   }
 }
@@ -156,3 +159,19 @@
 :focus-visible {
   @apply outline-none ring-2 ring-ring ring-offset-2;
 }
+
+/* Panda character styles */
+.panda-chat-bubble {
+  @apply relative bg-secondary p-4 rounded-xl;
+}
+
+.panda-chat-bubble::before {
+  content: '';
+  @apply absolute -left-3 top-4 w-6 h-6 bg-secondary transform rotate-45;
+  z-index: -1;
+}
+
+.panda-avatar {
+  @apply text-4xl;
+}
+

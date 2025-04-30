@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { cn } from "@/lib/utils";
+import { Check } from "lucide-react";
 
 interface ChatMessageProps {
   message: {
@@ -8,6 +9,7 @@ interface ChatMessageProps {
     text: string;
     sender: 'user' | 'ai';
     timestamp?: Date;
+    read?: boolean;
   };
 }
 
@@ -25,11 +27,16 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
         <div className="text-sm">
           {message.text}
         </div>
-        {message.timestamp && (
-          <div className="text-xs opacity-70 mt-1 text-right">
-            {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-          </div>
-        )}
+        <div className="flex items-center justify-end gap-2 mt-1">
+          {isUser && message.read && (
+            <Check className="h-3 w-3 text-blue-300" />
+          )}
+          {message.timestamp && (
+            <div className="text-xs opacity-70">
+              {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

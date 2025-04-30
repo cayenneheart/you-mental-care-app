@@ -4,8 +4,8 @@
   "short_name": "優～YOU～",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#7b61ff",
+  "background_color": "#e5deff",
+  "theme_color": "#9fd8fb",
   "description": "3タップで緊急メンタルサポートに接続",
   "icons": [
     {

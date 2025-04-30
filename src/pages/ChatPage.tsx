@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "@/components/Header";
@@ -22,6 +23,7 @@ const ChatPage = () => {
   // Store selectors
   const currentSession = useSOSStore(state => state.currentSession);
   const addMessage = useSOSStore(state => state.addMessage);
+  const markMessageAsRead = useSOSStore(state => state.markMessageAsRead);
   const startWaitTimeCounter = useSOSStore(state => state.startWaitTimeCounter);
   const stopWaitTimeCounter = useSOSStore(state => state.stopWaitTimeCounter);
   const setConnectionStatus = useSOSStore(state => state.setConnectionStatus);
@@ -51,6 +53,27 @@ const ChatPage = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [currentSession?.messages]);
+
+  // Mark AI messages as read when they are visible
+  useEffect(() => {
+    if (!currentSession) return;
+    
+    // 一定時間後にAIメッセージを既読にする
+    const aiMessages = currentSession.messages.filter(
+      (msg) => msg.sender === "ai" && !msg.read
+    );
+    
+    if (aiMessages.length > 0) {
+      // 3秒後に既読にする (実際のアプリでは画面内に表示されたかどうかを検出する)
+      const timer = setTimeout(() => {
+        aiMessages.forEach((msg) => {
+          markMessageAsRead(msg.id);
+        });
+      }, 3000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [currentSession, markMessageAsRead]);
   
   // Handle user message submission
   const handleSendMessage = async (text: string) => {
@@ -83,7 +106,7 @@ const ChatPage = () => {
     setConnectionStatus(true);
     
     addMessage(
-      "AIアシスタントがサポートします。どのようなお手伝いができるでしょうか？",
+      "🐼 こんにちは！パンダのユー（優）です。どのようなお手伝いができるでしょうか？",
       "ai"
     );
   };
@@ -126,6 +149,15 @@ const ChatPage = () => {
       
       <main className="flex-1 flex flex-col">
         <div className="chat-container">
+          {/* Panda avatar */}
+          <div className="flex items-center p-4 border-b">
+            <div className="text-4xl mr-2">🐼</div>
+            <div>
+              <h3 className="font-medium">パンダのユー（優）</h3>
+              <p className="text-sm text-muted-foreground">メンタルケアサポート</p>
+            </div>
+          </div>
+          
           {/* Messages */}
           <div className="messages-container">
             {currentSession.messages.map((msg) => (

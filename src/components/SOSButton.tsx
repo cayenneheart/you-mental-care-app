@@ -17,10 +17,11 @@ const SOSButton: React.FC<SOSButtonProps> = ({ onClick, className }) => {
       className={cn(
         "bg-sos text-sos-foreground hover:bg-sos/90 text-xl rounded-full w-40 h-40 shadow-lg",
         "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sos",
-        "animate-pulse",
+        "animate-pulse flex flex-col items-center justify-center",
         className
       )}
     >
+      <span className="text-4xl mb-2">🐼</span>
       優～YOU～
     </Button>
   );

@@ -12,10 +12,6 @@ interface EmergencyBannerProps {
 const EmergencyBanner: React.FC<EmergencyBannerProps> = ({ visible, className }) => {
   if (!visible) return null;
 
-  const handleEmergencyCall = () => {
-    window.location.href = 'tel:119';
-  };
-
   const handleHelplineCall = () => {
     // This would be a mental health helpline number
     window.location.href = 'tel:0120279338'; // TELL Lifeline Japan
@@ -33,16 +29,6 @@ const EmergencyBanner: React.FC<EmergencyBannerProps> = ({ visible, className })
       <p className="font-medium text-center">緊急サポートが必要かもしれません</p>
       
       <div className="flex space-x-3">
-        <Button
-          size="sm"
-          variant="destructive"
-          className="border-white border"
-          onClick={handleEmergencyCall}
-        >
-          <Phone className="mr-1 h-4 w-4" />
-          119に電話
-        </Button>
-        
         <Button
           size="sm"
           variant="secondary"

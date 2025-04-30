@@ -9,6 +9,7 @@ interface Message {
   text: string;
   sender: 'user' | 'ai';
   timestamp: Date;
+  read?: boolean;
 }
 
 interface Session {
@@ -33,6 +34,7 @@ interface SOSState {
   setRiskLevel: (level: RiskLevel) => void;
   createNewSession: () => void;
   addMessage: (text: string, sender: 'user' | 'ai') => void;
+  markMessageAsRead: (messageId: string) => void;
   incrementWaitTime: () => void;
   startWaitTimeCounter: () => void;
   stopWaitTimeCounter: () => void;
@@ -99,12 +101,28 @@ export const useSOSStore = create<SOSState>((set, get) => ({
         text,
         sender,
         timestamp: new Date(),
+        read: sender === 'ai' ? false : undefined,
       };
       
       return {
         currentSession: {
           ...state.currentSession,
           messages: [...state.currentSession.messages, newMessage],
+        },
+      };
+    });
+  },
+  
+  markMessageAsRead: (messageId) => {
+    set((state) => {
+      if (!state.currentSession) return state;
+      
+      return {
+        currentSession: {
+          ...state.currentSession,
+          messages: state.currentSession.messages.map((msg) => 
+            msg.id === messageId ? { ...msg, read: true } : msg
+          ),
         },
       };
     });
