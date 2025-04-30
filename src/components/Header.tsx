@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { camera } from "lucide-react";
+import { Camera } from "lucide-react";
 import { cn } from "@/lib/utils";
 import useSOSStore from "@/store/useSOSStore";
 
@@ -62,7 +62,7 @@ const Header: React.FC<HeaderProps> = ({ showVideoButton = false, className }) =
               onClick={() => setVideoDialogOpen(true)}
               className="rounded-full"
             >
-              <camera className="h-5 w-5" />
+              <Camera className="h-5 w-5" />
             </Button>
           )}
           
@@ -87,7 +87,7 @@ const Header: React.FC<HeaderProps> = ({ showVideoButton = false, className }) =
               className="flex flex-col h-auto p-4"
               onClick={() => setUseAvatar(false)}
             >
-              <camera size={32} className="mb-2" />
+              <Camera size={32} className="mb-2" />
               <span>顔を出す</span>
             </Button>
             

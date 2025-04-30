@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { phone } from "lucide-react";
+import { Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface EmergencyBannerProps {
@@ -39,7 +39,7 @@ const EmergencyBanner: React.FC<EmergencyBannerProps> = ({ visible, className })
           className="border-white border"
           onClick={handleEmergencyCall}
         >
-          <phone className="mr-1 h-4 w-4" />
+          <Phone className="mr-1 h-4 w-4" />
           119に電話
         </Button>
         
@@ -49,7 +49,7 @@ const EmergencyBanner: React.FC<EmergencyBannerProps> = ({ visible, className })
           className="bg-white/20 hover:bg-white/30"
           onClick={handleHelplineCall}
         >
-          <phone className="mr-1 h-4 w-4" />
+          <Phone className="mr-1 h-4 w-4" />
           相談窓口に電話
         </Button>
       </div>

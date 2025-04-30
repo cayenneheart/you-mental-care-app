@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { smile, meh, frown } from "lucide-react";
+import { Smile, Meh, Frown } from "lucide-react";
 
 export type MoodLevel = 1 | 2 | 3 | 4 | 5;
 
@@ -25,11 +25,11 @@ const MoodSelector: React.FC<MoodSelectorProps> = ({
   };
 
   const moods = [
-    { level: 5 as MoodLevel, icon: smile, label: "とても良い", color: "text-green-500" },
-    { level: 4 as MoodLevel, icon: smile, label: "良い", color: "text-emerald-400" },
-    { level: 3 as MoodLevel, icon: meh, label: "普通", color: "text-yellow-400" },
-    { level: 2 as MoodLevel, icon: frown, label: "悪い", color: "text-orange-400" },
-    { level: 1 as MoodLevel, icon: frown, label: "とても悪い", color: "text-red-500" }
+    { level: 5 as MoodLevel, icon: Smile, label: "とても良い", color: "text-green-500" },
+    { level: 4 as MoodLevel, icon: Smile, label: "良い", color: "text-emerald-400" },
+    { level: 3 as MoodLevel, icon: Meh, label: "普通", color: "text-yellow-400" },
+    { level: 2 as MoodLevel, icon: Frown, label: "悪い", color: "text-orange-400" },
+    { level: 1 as MoodLevel, icon: Frown, label: "とても悪い", color: "text-red-500" }
   ];
 
   return (
