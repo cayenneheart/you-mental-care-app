@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "@/components/Header";
@@ -8,6 +7,7 @@ import WaitingIndicator from "@/components/WaitingIndicator";
 import EmergencyBanner from "@/components/EmergencyBanner";
 import AppointmentBooker from "@/components/AppointmentBooker";
 import FeedbackSurvey from "@/components/FeedbackSurvey";
+import SOSFloatingButton from "@/components/SOSFloatingButton";
 import useSOSStore from "@/store/useSOSStore";
 import { useWebSocketConnection, sendMessage } from "@/services/api";
 import { Button } from "@/components/ui/button";
@@ -108,6 +108,7 @@ const ChatPage = () => {
             <p>セッションを読み込んでいます...</p>
           </div>
         </main>
+        <SOSFloatingButton />
       </div>
     );
   }
@@ -166,6 +167,8 @@ const ChatPage = () => {
         isOpen={showSurvey}
         onClose={() => setShowSurvey(false)}
       />
+
+      <SOSFloatingButton />
     </div>
   );
 };

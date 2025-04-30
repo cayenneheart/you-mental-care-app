@@ -6,23 +6,19 @@ import SOSButton from "@/components/SOSButton";
 import MoodSelector from "@/components/MoodSelector";
 import useSOSStore from "@/store/useSOSStore";
 import Header from "@/components/Header";
+import SOSFloatingButton from "@/components/SOSFloatingButton";
 import { submitSOS } from "@/services/api";
 import type { MoodLevel } from "@/services/api";
 
 const Index = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [step, setStep] = useState<"initial" | "mood">("initial");
   const [selectedMood, setSelectedMood] = useState<MoodLevel | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const createNewSession = useSOSStore(state => state.createNewSession);
   const setMoodLevel = useSOSStore(state => state.setMoodLevel);
   const setRiskLevel = useSOSStore(state => state.setRiskLevel);
   const addMessage = useSOSStore(state => state.addMessage);
-  
-  const handleSOSClick = () => {
-    setStep("mood");
-  };
   
   const handleMoodSelect = (level: MoodLevel) => {
     setSelectedMood(level);
@@ -77,22 +73,21 @@ const Index = () => {
       <Header />
       
       <main className="flex-1 flex flex-col items-center justify-center p-6">
-        {step === "initial" ? (
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-2">3-Tap SOSメンタルケア</h1>
-            <p className="text-muted-foreground mb-8">
-              今の気持ちを伝えて、すぐにサポートを受けられます
-            </p>
-            <SOSButton onClick={handleSOSClick} />
-          </div>
-        ) : (
-          <MoodSelector
-            onSelect={handleMoodSelect}
-            onSubmit={handleMoodSubmit}
-            className={isSubmitting ? "opacity-70 pointer-events-none" : ""}
-          />
-        )}
+        <div className="text-center mb-8">
+          <h1 className="text-2xl font-bold mb-2">優～YOU～メンタルケア</h1>
+          <p className="text-muted-foreground">
+            今の気持ちを伝えて、すぐにサポートを受けられます
+          </p>
+        </div>
+        
+        <MoodSelector
+          onSelect={handleMoodSelect}
+          onSubmit={handleMoodSubmit}
+          className={isSubmitting ? "opacity-70 pointer-events-none" : ""}
+        />
       </main>
+      
+      <SOSFloatingButton />
     </div>
   );
 };

@@ -21,7 +21,7 @@ const SOSButton: React.FC<SOSButtonProps> = ({ onClick, className }) => {
         className
       )}
     >
-      SOS
+      優～YOU～
     </Button>
   );
 };

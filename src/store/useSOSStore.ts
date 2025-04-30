@@ -42,7 +42,7 @@ interface SOSState {
   endCurrentSession: () => void;
 }
 
-const useSOSStore = create<SOSState>((set, get) => ({
+export const useSOSStore = create<SOSState>((set, get) => ({
   currentSession: null,
   sessions: [],
   shareDataForAI: false,

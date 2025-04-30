@@ -13,6 +13,7 @@ import {
 import { Camera } from "lucide-react";
 import { cn } from "@/lib/utils";
 import useSOSStore from "@/store/useSOSStore";
+import SOSFloatingButton from './SOSFloatingButton';
 
 interface HeaderProps {
   showVideoButton?: boolean;
@@ -51,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({ showVideoButton = false, className }) =
         )}
       >
         <Button variant="ghost" onClick={handleHomeClick}>
-          3-Tap SOS
+          優～YOU～
         </Button>
         
         <div className="flex items-center space-x-2">
