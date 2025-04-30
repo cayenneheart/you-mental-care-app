@@ -29,11 +29,11 @@ export const submitSOS = async (moodLevel: MoodLevel): Promise<SosResponse> => {
   try {
     // Mock API response for now
     const mockResponses = {
-      1: { riskLevel: 'high' as RiskLevel, text: 'I'm sorry to hear you're feeling extremely low. This sounds serious. Let me connect you with someone who can help immediately.' },
-      2: { riskLevel: 'medium' as RiskLevel, text: 'I understand you're going through a difficult time. Let's talk about what's happening and find some ways to help you feel better.' },
-      3: { riskLevel: 'low' as RiskLevel, text: 'Thank you for reaching out. It sounds like you're having a challenging day. Would you like to tell me more about what's going on?' },
-      4: { riskLevel: 'low' as RiskLevel, text: 'I'm glad you're checking in. How can I support you today?' },
-      5: { riskLevel: 'low' as RiskLevel, text: 'Great to hear you're doing well! Is there something specific you'd like to discuss or work on today?' },
+      1: { riskLevel: 'high' as RiskLevel, text: "I'm sorry to hear you're feeling extremely low. This sounds serious. Let me connect you with someone who can help immediately." },
+      2: { riskLevel: 'medium' as RiskLevel, text: "I understand you're going through a difficult time. Let's talk about what's happening and find some ways to help you feel better." },
+      3: { riskLevel: 'low' as RiskLevel, text: "Thank you for reaching out. It sounds like you're having a challenging day. Would you like to tell me more about what's going on?" },
+      4: { riskLevel: 'low' as RiskLevel, text: "I'm glad you're checking in. How can I support you today?" },
+      5: { riskLevel: 'low' as RiskLevel, text: "Great to hear you're doing well! Is there something specific you'd like to discuss or work on today?" },
     };
     
     const response = mockResponses[moodLevel] || mockResponses[3];
