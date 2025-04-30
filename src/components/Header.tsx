@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,17 +20,17 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ showVideoButton = false, className }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [videoDialogOpen, setVideoDialogOpen] = useState(false);
   const [useAvatar, setUseAvatar] = useState(false);
   const setVideoCallStatus = useSOSStore(state => state.setVideoCallStatus);
   
   const handleHomeClick = () => {
-    router.push('/');
+    navigate('/');
   };
   
   const handleSettingsClick = () => {
-    router.push('/settings');
+    navigate('/settings');
   };
   
   const handleStartVideoCall = () => {
