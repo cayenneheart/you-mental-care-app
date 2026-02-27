@@ -54,29 +54,29 @@ const SOSFloatingButton = () => {
   return (
     <>
       <Button
-        variant="destructive"
         size="icon"
-        className="rounded-full fixed bottom-6 right-6 w-14 h-14 shadow-lg animate-pulse z-40"
+        className="rounded-full fixed bottom-6 right-6 w-14 h-14 shadow-md bg-rose-400/90 hover:bg-rose-500 text-white border-none transition-all duration-700 hover:scale-105 z-40"
         onClick={handleSOSClick}
       >
-        <HeartPulse className="h-7 w-7" />
+        <HeartPulse className="h-6 w-6 animate-pulse" />
       </Button>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>緊急サポート</DialogTitle>
-            <DialogDescription>
-              カウンセラーに直接接続します。緊急の相談が必要ですか？
+            <DialogTitle className="text-slate-700">心のサポート</DialogTitle>
+            <DialogDescription className="text-slate-500 mt-2 leading-relaxed">
+              カウンセラーに直接つながります。<br />
+              今すぐにお話をご希望ですか？
             </DialogDescription>
           </DialogHeader>
-          
-          <DialogFooter>
-            <Button variant="ghost" onClick={() => setDialogOpen(false)}>
+
+          <DialogFooter className="gap-2 sm:gap-0 mt-4">
+            <Button variant="ghost" onClick={() => setDialogOpen(false)} className="rounded-full text-slate-500 font-light hover:bg-slate-100">
               キャンセル
             </Button>
-            <Button variant="destructive" onClick={handleConnectToCounselor}>
-              カウンセラーに接続する
+            <Button onClick={handleConnectToCounselor} className="rounded-full bg-rose-400/90 hover:bg-rose-500 text-white shadow-none transition-colors duration-300">
+              カウンセラーと話す
             </Button>
           </DialogFooter>
         </DialogContent>

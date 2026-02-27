@@ -103,17 +103,7 @@
   @apply flex justify-center gap-3 md:gap-6 my-4;
 }
 
-.emotion-option {
-  @apply cursor-pointer p-2 rounded-full transition-all duration-200;
-}
-
-.emotion-option:hover {
-  @apply bg-accent/50 scale-110;
-}
-
-.emotion-option.selected {
-  @apply bg-accent scale-110 ring-2 ring-primary;
-}
+/* Emotion rating CSS is handled via Tailwind in the component */
 
 /* Chat styles */
 .chat-container {

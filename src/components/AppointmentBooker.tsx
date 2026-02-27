@@ -35,16 +35,16 @@ const AppointmentBooker: React.FC<AppointmentBookerProps> = ({ className }) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [bookingStep, setBookingStep] = useState<'date' | 'time' | 'confirm' | 'processing'>('date');
-  
+
   useEffect(() => {
     if (selectedDate && bookingStep === 'time') {
       loadAppointments();
     }
   }, [selectedDate, bookingStep]);
-  
+
   const loadAppointments = async () => {
     if (!selectedDate) return;
-    
+
     setIsLoading(true);
     try {
       const availableAppointments = await getAvailableAppointments(selectedDate);
@@ -55,23 +55,23 @@ const AppointmentBooker: React.FC<AppointmentBookerProps> = ({ className }) => {
       setIsLoading(false);
     }
   };
-  
+
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date);
     setBookingStep('time');
   };
-  
+
   const handleAppointmentSelect = (appointment: Appointment) => {
     setSelectedAppointment(appointment);
     setBookingStep('confirm');
   };
-  
+
   const handleBooking = async () => {
     if (!selectedAppointment) return;
-    
+
     setBookingStep('processing');
     setIsLoading(true);
-    
+
     try {
       const checkoutUrl = await bookAppointment(selectedAppointment.id);
       // Redirect to Stripe checkout
@@ -83,14 +83,14 @@ const AppointmentBooker: React.FC<AppointmentBookerProps> = ({ className }) => {
       setIsLoading(false);
     }
   };
-  
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('ja-JP', {
       style: 'currency',
       currency: 'JPY',
     }).format(price);
   };
-  
+
   const renderBookingContent = () => {
     switch (bookingStep) {
       case 'date':
@@ -106,7 +106,7 @@ const AppointmentBooker: React.FC<AppointmentBookerProps> = ({ className }) => {
             />
           </div>
         );
-        
+
       case 'time':
         return (
           <div className="flex flex-col p-4">
@@ -118,7 +118,7 @@ const AppointmentBooker: React.FC<AppointmentBookerProps> = ({ className }) => {
                 日付を変更
               </Button>
             </div>
-            
+
             {isLoading ? (
               <div className="flex justify-center my-8">
                 <div className="flex space-x-2">
@@ -146,17 +146,17 @@ const AppointmentBooker: React.FC<AppointmentBookerProps> = ({ className }) => {
             )}
           </div>
         );
-        
+
       case 'confirm':
         if (!selectedAppointment) return null;
-        
+
         return (
           <div className="flex flex-col p-4">
             <h3 className="font-medium mb-4">予約内容の確認</h3>
-            
+
             <Card>
               <CardHeader>
-                <CardTitle>30分の面談</CardTitle>
+                <CardTitle>専門スタッフとのオンライン相談 (30分)</CardTitle>
                 <CardDescription>
                   予約内容を確認してください
                 </CardDescription>
@@ -177,8 +177,8 @@ const AppointmentBooker: React.FC<AppointmentBookerProps> = ({ className }) => {
                   <span>{selectedAppointment.startTime} - {selectedAppointment.endTime}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">料金</span>
-                  <span className="font-medium">{formatPrice(selectedAppointment.price)}</span>
+                  <span className="text-muted-foreground">費用</span>
+                  <span className="font-medium text-slate-600">無料（会社負担）</span>
                 </div>
               </CardContent>
               <CardFooter className="flex justify-between">
@@ -198,30 +198,30 @@ const AppointmentBooker: React.FC<AppointmentBookerProps> = ({ className }) => {
             </Card>
           </div>
         );
-        
+
       default:
         return null;
     }
   };
-  
+
   return (
     <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
       <DrawerTrigger asChild>
-        <Button className={cn(className)}>
-          30分面談を予約
+        <Button className={cn("rounded-full bg-slate-700 hover:bg-slate-800 text-white font-light", className)}>
+          専門スタッフと話す
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className="bg-white">
         <DrawerHeader>
-          <DrawerTitle>面談の予約</DrawerTitle>
-          <DrawerDescription>
-            カウンセラーとの30分のビデオ面談を予約します。
-            日付と時間を選択し、お支払い手続きを行ってください。
+          <DrawerTitle className="text-slate-700">オンライン相談の予約</DrawerTitle>
+          <DrawerDescription className="text-slate-500">
+            社内外の専門スタッフとのビデオ相談を予約できます。<br />
+            ご希望の日付と時間を選択してください。プライバシーは厳守されます。
           </DrawerDescription>
         </DrawerHeader>
-        
+
         {renderBookingContent()}
-        
+
         <DrawerFooter>
           <DrawerClose asChild>
             <Button variant="outline">キャンセル</Button>

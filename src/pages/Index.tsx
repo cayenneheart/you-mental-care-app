@@ -19,41 +19,41 @@ const Index = () => {
   const setMoodLevel = useSOSStore(state => state.setMoodLevel);
   const setRiskLevel = useSOSStore(state => state.setRiskLevel);
   const addMessage = useSOSStore(state => state.addMessage);
-  
+
   const handleMoodSelect = (level: MoodLevel) => {
     setSelectedMood(level);
   };
-  
+
   const handleMoodSubmit = async () => {
     if (selectedMood === null) return;
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // Create a new session in our store
       createNewSession();
       setMoodLevel(selectedMood);
-      
+
       // Submit to API
       const response = await submitSOS(selectedMood);
-      
+
       // Update store with risk level and initial message
       setRiskLevel(response.riskLevel);
       addMessage("こんにちは、今日はどのようなご気分ですか？", "ai");
-      
+
       // Add user's mood as first message
       const moodMessages = {
-        1: "とても良くない気分です。",
-        2: "あまり良くない気分です。",
-        3: "普通です。",
-        4: "良い気分です。",
-        5: "とても良い気分です。",
+        1: "とても疲れています／大きなストレスを感じています。",
+        2: "少し疲れています／モヤモヤしています。",
+        3: "いつも通りです／特に問題ありません。",
+        4: "調子が良いです／前向きに取り組めています。",
+        5: "とても調子が良いです／充実しています！",
       };
       addMessage(moodMessages[selectedMood], "user");
-      
+
       // Add AI response
-      addMessage(response.initialResponse, "ai");
-      
+      addMessage("今日のコンディションですね、教えていただきありがとうございます。\nよろしければ、今の業務の状況や、モヤモヤしていることなど、もう少し詳しくお話しいただけますか？\n※ここでの会話はプライバシーが守られます。安心してご自身のペースでお話しください。", "ai");
+
       // Navigate to chat
       navigate(`/chat/${response.sessionId}`);
     } catch (error) {
@@ -67,26 +67,26 @@ const Index = () => {
       setIsSubmitting(false);
     }
   };
-  
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#fdfcfb] to-[#f4f2ee] tracking-wide text-slate-700 font-sans transition-colors duration-1000">
       <Header />
-      
-      <main className="flex-1 flex flex-col items-center justify-center p-6">
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold mb-2">優～YOU～メンタルケア</h1>
-          <p className="text-muted-foreground">
-            今の気持ちを伝えて、すぐにサポートを受けられます
+
+      <main className="flex-1 flex flex-col items-center justify-center p-6 slide-in">
+        <div className="text-center mb-12">
+          <h1 className="text-2xl md:text-3xl font-medium mb-3 text-slate-700 tracking-wider">コンディション・チェック</h1>
+          <p className="text-slate-500 text-sm md:text-base font-light">
+            毎日の気分を記録して、健やかなワークライフを
           </p>
         </div>
-        
+
         <MoodSelector
           onSelect={handleMoodSelect}
           onSubmit={handleMoodSubmit}
           className={isSubmitting ? "opacity-70 pointer-events-none" : ""}
         />
       </main>
-      
+
       <SOSFloatingButton />
     </div>
   );

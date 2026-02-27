@@ -25,36 +25,36 @@ const Header: React.FC<HeaderProps> = ({ showVideoButton = false, className }) =
   const [videoDialogOpen, setVideoDialogOpen] = useState(false);
   const [useAvatar, setUseAvatar] = useState(false);
   const setVideoCallStatus = useSOSStore(state => state.setVideoCallStatus);
-  
+
   const handleHomeClick = () => {
     navigate('/');
   };
-  
+
   const handleSettingsClick = () => {
     navigate('/settings');
   };
-  
+
   const handleStartVideoCall = () => {
     // In a real app, this would connect to Twilio Video
     setVideoCallStatus(true);
     setVideoDialogOpen(false);
-    
+
     // Mock opening a video call
     window.alert('ビデオ通話を開始します...');
   };
-  
+
   return (
     <>
-      <header 
+      <header
         className={cn(
-          "bg-card border-b flex items-center justify-between px-4 py-2 sticky top-0 z-30",
+          "bg-white/50 backdrop-blur-sm border-b border-slate-100 flex items-center justify-between px-4 py-3 sticky top-0 z-30 transition-all",
           className
         )}
       >
-        <Button variant="ghost" onClick={handleHomeClick}>
-          優～YOU～
+        <Button variant="ghost" onClick={handleHomeClick} className="text-slate-600 font-medium tracking-wide">
+          Well-being Check
         </Button>
-        
+
         <div className="flex items-center space-x-2">
           {showVideoButton && (
             <Button
@@ -66,13 +66,13 @@ const Header: React.FC<HeaderProps> = ({ showVideoButton = false, className }) =
               <Camera className="h-5 w-5" />
             </Button>
           )}
-          
+
           <Button variant="ghost" size="sm" onClick={handleSettingsClick}>
             設定
           </Button>
         </div>
       </header>
-      
+
       <Dialog open={videoDialogOpen} onOpenChange={setVideoDialogOpen}>
         <DialogContent>
           <DialogHeader>
@@ -81,7 +81,7 @@ const Header: React.FC<HeaderProps> = ({ showVideoButton = false, className }) =
               カメラとマイクを使用します。実際の顔を表示するか、アバターを使用するかを選択してください。
             </DialogDescription>
           </DialogHeader>
-          
+
           <div className="flex justify-center gap-4 my-4">
             <Button
               variant={useAvatar ? "outline" : "default"}
@@ -91,7 +91,7 @@ const Header: React.FC<HeaderProps> = ({ showVideoButton = false, className }) =
               <Camera size={32} className="mb-2" />
               <span>顔を出す</span>
             </Button>
-            
+
             <Button
               variant={useAvatar ? "default" : "outline"}
               className="flex flex-col h-auto p-4"
@@ -101,7 +101,7 @@ const Header: React.FC<HeaderProps> = ({ showVideoButton = false, className }) =
               <span>アバターを使う</span>
             </Button>
           </div>
-          
+
           <DialogFooter>
             <Button variant="ghost" onClick={() => setVideoDialogOpen(false)}>
               キャンセル
