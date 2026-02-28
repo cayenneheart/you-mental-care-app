@@ -137,7 +137,7 @@ const ChatPage = () => {
   // Show loading state if no session exists
   if (!currentSession) {
     return (
-      <div className="min-h-screen flex flex-col">
+      <div className="flex-1 flex flex-col w-full h-full relative">
         <Header />
         <main className="flex-1 flex items-center justify-center">
           <div className="text-center">
@@ -155,7 +155,7 @@ const ChatPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex-1 flex flex-col w-full h-full relative">
       {/* Emergency banner for high risk */}
       <EmergencyBanner visible={currentSession.riskLevel === "high"} />
 

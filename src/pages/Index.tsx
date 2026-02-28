@@ -69,13 +69,13 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#fdfcfb] to-[#f4f2ee] tracking-wide text-slate-700 font-sans transition-colors duration-1000">
+    <div className="flex-1 flex flex-col w-full h-full">
       <Header />
 
-      <main className="flex-1 flex flex-col items-center justify-center p-6 slide-in">
+      <main className="flex-1 container mx-auto flex flex-col items-center justify-center p-6 slide-in max-w-3xl">
         <div className="text-center mb-12">
-          <h1 className="text-2xl md:text-3xl font-medium mb-3 text-slate-700 tracking-wider">コンディション・チェック</h1>
-          <p className="text-slate-500 text-sm md:text-base font-light">
+          <h1 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight text-foreground">コンディション・チェック</h1>
+          <p className="text-muted-foreground text-base md:text-lg">
             毎日の気分を記録して、健やかなワークライフを
           </p>
         </div>

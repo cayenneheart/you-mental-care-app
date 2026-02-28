@@ -13,6 +13,7 @@ import {
 import { Camera } from "lucide-react";
 import { cn } from "@/lib/utils";
 import useSOSStore from "@/store/useSOSStore";
+import { useLocation, Link } from "react-router-dom";
 import SOSFloatingButton from './SOSFloatingButton';
 
 interface HeaderProps {
@@ -22,6 +23,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ showVideoButton = false, className }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [videoDialogOpen, setVideoDialogOpen] = useState(false);
   const [useAvatar, setUseAvatar] = useState(false);
   const setVideoCallStatus = useSOSStore(state => state.setVideoCallStatus);
@@ -47,29 +49,68 @@ const Header: React.FC<HeaderProps> = ({ showVideoButton = false, className }) =
     <>
       <header
         className={cn(
-          "bg-white/50 backdrop-blur-sm border-b border-slate-100 flex items-center justify-between px-4 py-3 sticky top-0 z-30 transition-all",
+          "sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
           className
         )}
       >
-        <Button variant="ghost" onClick={handleHomeClick} className="text-slate-600 font-medium tracking-wide">
-          Well-being Check
-        </Button>
+        <div className="container mx-auto flex h-14 items-center px-4">
+          <div className="hidden md:flex items-center gap-6 mr-6">
+            <Link to="/" className="flex items-center space-x-2">
+              <span className="font-bold sm:inline-block tracking-tight text-foreground">
+                Well-being Check
+              </span>
+            </Link>
+            <nav className="flex items-center space-x-6 text-sm font-medium">
+              {[
+                { label: 'ホーム', path: '/' },
+                { label: 'チャット', path: '/chat', matches: ['/chat'] },
+                { label: '設定', path: '/settings', matches: ['/settings'] },
+              ].map((item) => {
+                const isActive = item.matches
+                  ? item.matches.some(m => location.pathname.startsWith(m))
+                  : location.pathname === item.path;
 
-        <div className="flex items-center space-x-2">
-          {showVideoButton && (
-            <Button
-              size="icon"
-              variant="outline"
-              onClick={() => setVideoDialogOpen(true)}
-              className="rounded-full"
-            >
-              <Camera className="h-5 w-5" />
-            </Button>
-          )}
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={cn(
+                      "transition-colors hover:text-foreground/80",
+                      isActive ? "text-foreground" : "text-foreground/60"
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
 
-          <Button variant="ghost" size="sm" onClick={handleSettingsClick}>
-            設定
-          </Button>
+          {/* Mobile view top nav branding */}
+          <div className="md:hidden flex flex-1 items-center">
+            <Link to="/" className="font-bold tracking-tight text-foreground">
+              Well-being Check
+            </Link>
+          </div>
+
+          <div className="flex flex-1 items-center justify-end space-x-2">
+            {showVideoButton && (
+              <Button
+                size="icon"
+                variant="outline"
+                onClick={() => setVideoDialogOpen(true)}
+                className="h-8 w-8 rounded-full"
+              >
+                <Camera className="h-4 w-4" />
+              </Button>
+            )}
+
+            <nav className="flex items-center md:hidden">
+              <Button variant="ghost" size="sm" onClick={handleSettingsClick} className="text-muted-foreground hover:text-foreground">
+                設定
+              </Button>
+            </nav>
+          </div>
         </div>
       </header>
 

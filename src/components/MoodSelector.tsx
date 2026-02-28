@@ -25,16 +25,16 @@ const MoodSelector: React.FC<MoodSelectorProps> = ({
   };
 
   const moods = [
-    { level: 5 as MoodLevel, icon: Smile, label: "とても良い", color: "text-teal-600/70" },
-    { level: 4 as MoodLevel, icon: Smile, label: "良い", color: "text-emerald-600/60" },
-    { level: 3 as MoodLevel, icon: Meh, label: "いつも通り", color: "text-amber-600/60" },
-    { level: 2 as MoodLevel, icon: Frown, label: "少し疲れた", color: "text-orange-500/60" },
-    { level: 1 as MoodLevel, icon: Frown, label: "ストレス", color: "text-rose-500/60" }
+    { level: 5 as MoodLevel, icon: Smile, label: "とても良い", color: "text-emerald-500" },
+    { level: 4 as MoodLevel, icon: Smile, label: "良い", color: "text-emerald-400" },
+    { level: 3 as MoodLevel, icon: Meh, label: "いつも通り", color: "text-amber-500" },
+    { level: 2 as MoodLevel, icon: Frown, label: "少し疲れた", color: "text-orange-500" },
+    { level: 1 as MoodLevel, icon: Frown, label: "ストレス", color: "text-destructive" }
   ];
 
   return (
     <div className={cn("flex flex-col items-center space-y-10 w-full", className)}>
-      <h2 className="text-lg md:text-xl font-normal text-slate-600 tracking-wide">本日のコンディションはいかがですか？</h2>
+      <h2 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight">本日のコンディションはいかがですか？</h2>
 
       <div className="emotion-rating">
         {moods.map((mood) => {
@@ -44,9 +44,10 @@ const MoodSelector: React.FC<MoodSelectorProps> = ({
               key={mood.level}
               onClick={() => handleSelect(mood.level)}
               className={cn(
-                "emotion-option flex flex-col items-center p-4 rounded-3xl transition-all duration-700 ease-out",
-                mood.color,
-                selectedMood === mood.level ? "bg-white/60 shadow-sm transform -translate-y-2" : "hover:bg-white/40"
+                "emotion-option flex flex-col items-center justify-center p-6 rounded-2xl transition-all duration-300 ease-out border-2",
+                selectedMood === mood.level
+                  ? "bg-primary/5 border-primary shadow-md transform -translate-y-1"
+                  : "bg-card border-transparent shadow-sm hover:border-border hover:bg-accent hover:text-accent-foreground opacity-80 hover:opacity-100"
               )}
               aria-label={mood.label}
               title={mood.label}
@@ -55,11 +56,14 @@ const MoodSelector: React.FC<MoodSelectorProps> = ({
                 size={52}
                 strokeWidth={1.5}
                 className={cn(
-                  "transition-all duration-1000",
-                  selectedMood === mood.level ? "scale-105" : "opacity-80"
+                  "transition-all duration-300",
+                  mood.color,
+                  selectedMood === mood.level ? "scale-110" : "scale-100"
                 )}
               />
-              <div className="text-xs font-light mt-3 tracking-wider">{mood.label}</div>
+              <div className={cn("text-sm font-medium mt-4 tracking-wide transition-colors duration-300", selectedMood === mood.level ? "text-primary" : "text-muted-foreground")}>
+                {mood.label}
+              </div>
             </button>
           );
         })}
@@ -68,7 +72,12 @@ const MoodSelector: React.FC<MoodSelectorProps> = ({
       <Button
         onClick={onSubmit}
         disabled={selectedMood === null}
-        className="w-full max-w-xs mt-8 rounded-full py-6 text-base tracking-widest font-light shadow-none bg-slate-700/90 text-white hover:bg-slate-800 transition-all duration-500"
+        className={cn(
+          "w-full max-w-md mt-10 rounded-full h-14 text-lg font-semibold shadow-lg transition-all duration-300",
+          selectedMood === null
+            ? "bg-muted text-muted-foreground shadow-none"
+            : "bg-primary text-primary-foreground hover:bg-primary/90"
+        )}
       >
         記録を送信する
       </Button>
